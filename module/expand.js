@@ -1,3 +1,4 @@
+const { array } = require('joi');
 const mongoose = require('mongoose')
 
 const ExpandSchema = new mongoose.Schema({
@@ -13,7 +14,7 @@ const ExpandSchema = new mongoose.Schema({
     },
     method: {
         type: String,
-        enum: ['CASH', 'ONLINE'],
+        Array: ['CASH', 'ONLINE', 'Paytm'],
         default: 'CASH'
     },
     cashInOut: {

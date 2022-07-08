@@ -13,8 +13,8 @@ router.get('/', auth, async function (req, res) {
         cashbookId: Joi.string().hex().length(24).required(),
         category: Joi.string().min(3).max(30),
         amount: Joi.number(),
-        method: Joi.string().valid('CASH', 'ONLINE'),
-        cashInOut: Joi.string().valid('CASH_IN', 'CASH_OUT'),
+        method: Joi.array(),
+        cashInOut: Joi.array(),
         date: Joi.object().keys({
             startDate: Joi.date(),
             endDate: Joi.date()
@@ -46,9 +46,18 @@ router.get('/', auth, async function (req, res) {
     if (req.body.cashInOut) {
         query["cashInOut"] = req.body.cashInOut
     }
+
+
     if (req.body.method) {
-        query["method"] = req.body.method
+
+        // if (typeof (method) === Array)
+            query["method"] = req.body.method
+            
+            // else{
+            //     query["method"] = req.body.method
+            // }
     }
+
     if (req.body.category) {
         query["category"] = req.body.category
     }

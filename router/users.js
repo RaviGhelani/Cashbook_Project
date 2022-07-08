@@ -9,24 +9,17 @@ const { User } = require('../module/user')
 
 router.get('/', async function (req, res) {
 
-    try {
-        let { page, size } = req.query
-        if (!page) {
-            page = 1;
-        }
-        if (!size) {
-            size = 2;
-        }
-
-        const limit = parseInt(size);
-        const skip = (page - 1) * size;
-
-        const user = await User.find().select('-password').limit(limit).skip(skip);
-        res.send(user);
-    }
-    catch (error) {
-        res.status(500).send(error.message)
-    }
+    User.paginate({}, { page: req.query.page, limit: req.query.limit })
+        .then(response => {
+            res.send({
+                response
+            })
+        })
+                .catch(error => {
+                    res.status(500).send({
+                        message: "error: " + error
+                    })
+                })
 });
 
 router.get('/me', auth, async function (req, res) {

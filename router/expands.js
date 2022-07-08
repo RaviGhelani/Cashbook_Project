@@ -34,7 +34,7 @@ router.post('/', auth, async function (req, res) {
         cashbookId: Joi.string().hex().length(24).required(),
         category: Joi.string().min(3).max(30).required(),
         amount: Joi.number().required(),
-        method: Joi.string().valid('CASH', 'ONLINE'),
+        method: Joi.string().valid('CASH', 'ONLINE', 'Paytm'),
         cashInOut: Joi.string().valid('CASH_IN', 'CASH_OUT').required(),
     });
 
@@ -73,7 +73,7 @@ router.put('/:id', auth, async function (req, res) {
         cashbookId: Joi.string().hex().length(24).required(),
         category: Joi.string().min(3).max(30),
         amount: Joi.number(),
-        method: Joi.string().valid('CASH', 'ONLINE'),
+        method: Joi.string().valid('CASH', 'ONLINE', 'Paytm'),
         cashInOut: Joi.string().valid('CASH_IN', 'CASH_OUT'),
     });
 

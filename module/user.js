@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const mongoosePaginate = require('mongoose-paginate-v2');
 const config = require('config')
 const jwt = require('jsonwebtoken');
 
@@ -28,6 +28,8 @@ const userSchema = new mongoose.Schema({
     isAdmin: Boolean
 });
 
+userSchema.plugin(mongoosePaginate);
+
 userSchema.methods.generateAuthToken = function () { 
     const token= jwt.sign({_id: this._id, isAdmin: this.isAdmin}, config.get('jwtPrivateKey'));
     return token;
@@ -35,6 +37,7 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model('User', userSchema);
 
+User.paginate().then({});
 
 module.exports.User = User;
 module.exports.userSchema = userSchema;
